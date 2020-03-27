@@ -2,6 +2,7 @@ package tech.pegasys.teamx.crossshardsim.shard;
 
 import tech.pegasys.teamx.crossshardsim.beacon.BeaconChain;
 import tech.pegasys.teamx.crossshardsim.beacon.CrossLink;
+import tech.pegasys.teamx.crossshardsim.util.SimpleHash;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class Shard {
   int blockNumber = 0;
   int shardId;
   BeaconChain beaconChain;
+
+  int oldCrossLink = 1;
 
 
   public Shard(int shardId, int numTransactionsPerBlock, BeaconChain beaconChain) {
@@ -51,11 +54,31 @@ public class Shard {
     }
     this.shardChain.add(block);
 
-    return calculateCrossLink();
+    return calculateCrossLink(block);
   }
 
-  private CrossLink calculateCrossLink() {
-    return null;
+  private CrossLink calculateCrossLink(ShardBlock block) {
+    // TODO don't include state root into the cross link, otherwise historical information needs to be kept.
+    int stateRoot = 1;
+    int transRoot1 = 1;
+    int transRoot2 = 1;
+    int transactionRoot;
+    switch (block.transactions.size()) {
+      case 0:
+        break;
+      case 1:
+        transRoot1 = block.transactions.get(0).calculateRoot();
+        break;
+      case 2:
+        transRoot1 = block.transactions.get(0).calculateRoot();
+        transRoot2 = block.transactions.get(1).calculateRoot();
+        break;
+      default:
+        throw new Error("more than two transactions per block not currently supported");
+    }
+    transactionRoot = SimpleHash.hash(transRoot1, transRoot2);
+
+    return new CrossLink(transactionRoot);
   }
 
 

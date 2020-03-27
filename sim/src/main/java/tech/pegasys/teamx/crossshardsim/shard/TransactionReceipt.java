@@ -8,6 +8,7 @@ public class TransactionReceipt {
   }
 
   Status status = Status.NOT_MINED;
+  SystemEventMessage event;
 
 
   public void setStatus(Status s) {
@@ -18,5 +19,18 @@ public class TransactionReceipt {
     return this.status;
   }
 
+  public void addSystemEvent(SystemEventMessage event) {
+    if (this.event != null) {
+      throw new Error("only one event supported at the moment");
+    }
+    this.event = event;
+  }
+
+  public int calculateRoot() {
+    if (this.event == null) {
+      return 1;
+    }
+    return this.event.calculateRoot();
+  }
 
 }

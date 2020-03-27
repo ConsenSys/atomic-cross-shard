@@ -1,6 +1,7 @@
 package tech.pegasys.teamx.crossshardsim.shard;
 
 import tech.pegasys.teamx.crossshardsim.beacon.BeaconChain;
+import tech.pegasys.teamx.crossshardsim.util.SimpleHash;
 
 public class Transaction {
   public enum Type {
@@ -54,6 +55,17 @@ public class Transaction {
     this.receipt = txr;
   }
 
+  public int calculateRoot() {
+    int callRoot = SimpleHash.hash(this.type.ordinal(), this.shardId, this.contractAddress, this.value, this.payload);
+    // TODO add expected calls into calcualtion
+    //ExpectedCall[] expectedCalls;
+
+    int receiptRoot = this.receipt.calculateRoot();
+
+    return SimpleHash.hash(callRoot, receiptRoot);
+  }
+
+
   public void execute(Shard shard, BeaconChain beaconChain) {
     System.out.println("Executing transaction: Shard: " + shard.shardId + ", Contract: " + this.contractAddress + ", Transaction Type: " + this.type);
     boolean success = false;
@@ -75,6 +87,9 @@ public class Transaction {
           }
           break;
         case START:
+          SystemEventMessage startEvent = new SystemEventMessage(this);
+          this.receipt.addSystemEvent(startEvent);
+
           break;
         case SEGMENT:
           success = shard.executeContractFunction(this.contractAddress, this.value, this.payload, true);

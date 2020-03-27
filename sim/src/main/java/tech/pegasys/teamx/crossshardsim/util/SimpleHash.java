@@ -19,4 +19,7 @@ public class SimpleHash {
     return (v1 * 7 + v2 * 13 + v3 * 17 + v4*19) % LARGE_PRIME;
   }
 
+  public static int hash(int v1, int v2, int v3, int v4, int v5) {
+    return (v1 * 7 + v2 * 13 + v3 * 17 + v4*19 + v5*23) % LARGE_PRIME;
+  }
 }
