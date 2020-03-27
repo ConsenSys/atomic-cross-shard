@@ -1,4 +1,6 @@
-package tech.pegasys.teamx.crossshardsim;
+package tech.pegasys.teamx.crossshardsim.beacon;
+
+import tech.pegasys.teamx.crossshardsim.shard.Shard;
 
 import java.util.ArrayList;
 
@@ -6,7 +8,7 @@ public class BeaconChain {
   public ArrayList<BeaconBlock> beaconChain = new ArrayList<>();
 
 
-  int blockNumber = 0;
+  public int blockNumber = 0;
 
   public Shard[] shards;
 
@@ -24,5 +26,11 @@ public class BeaconChain {
       crossLinks[i] = this.shards[i].mineBlock();
     }
     this.beaconChain.add(new BeaconBlock(this.blockNumber++, crossLinks));
+  }
+
+  public void printAllShards() {
+    for (Shard shard: this.shards) {
+      System.out.println(" " + shard.toString());
+    }
   }
 }

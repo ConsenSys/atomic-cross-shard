@@ -1,4 +1,4 @@
-package tech.pegasys.teamx.crossshardsim;
+package tech.pegasys.teamx.crossshardsim.beacon;
 
 public class BeaconBlock {
   int blockNumber;

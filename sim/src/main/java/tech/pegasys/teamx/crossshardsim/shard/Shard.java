@@ -1,6 +1,8 @@
-package tech.pegasys.teamx.crossshardsim;
+package tech.pegasys.teamx.crossshardsim.shard;
 
-import java.math.BigInteger;
+import tech.pegasys.teamx.crossshardsim.beacon.BeaconChain;
+import tech.pegasys.teamx.crossshardsim.beacon.CrossLink;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Map;
@@ -68,7 +70,6 @@ public class Shard {
   }
 
   public boolean executeContractFunction(int address, int value, int payload, boolean lock) {
-    System.out.println(" Executing function: Shard: " + this.shardId + ", Contract: " + address);
     Contract con = this.contracts.get(address);
     if (con == null) {
       // Contract doesn't exists.
@@ -77,4 +78,12 @@ public class Shard {
     return con.executeContractFunction(value, payload, lock);
   }
 
+  @Override
+  public String toString() {
+    String info = "Shard Id: " + this.shardId + ", Block Number: " + this.blockNumber;
+    for (Contract contract: this.contracts.values()) {
+      info = info + ", [" + contract.toString() + "]";
+    }
+    return info;
+  }
 }

@@ -1,4 +1,4 @@
-package tech.pegasys.teamx.crossshardsim;
+package tech.pegasys.teamx.crossshardsim.util;
 
 
 // This is not a cryptographic hash. It should provide a way of combining the numbers though.

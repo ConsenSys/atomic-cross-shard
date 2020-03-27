@@ -1,4 +1,4 @@
-package tech.pegasys.teamx.crossshardsim;
+package tech.pegasys.teamx.crossshardsim.shard;
 
 import java.util.ArrayList;
 

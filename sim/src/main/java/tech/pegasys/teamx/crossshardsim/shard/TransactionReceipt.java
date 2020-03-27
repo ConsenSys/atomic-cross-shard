@@ -1,4 +1,4 @@
-package tech.pegasys.teamx.crossshardsim;
+package tech.pegasys.teamx.crossshardsim.shard;
 
 public class TransactionReceipt {
   enum Status {

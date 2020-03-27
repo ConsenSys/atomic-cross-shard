@@ -1,5 +1,8 @@
 package tech.pegasys.teamx.crossshardsim;
 
+import tech.pegasys.teamx.crossshardsim.app.Application;
+import tech.pegasys.teamx.crossshardsim.beacon.BeaconChain;
+
 public class CrossShardSimMain {
 
   public static void main(String[] args) throws Exception {
@@ -12,7 +15,7 @@ public class CrossShardSimMain {
     beaconChain.mineBlock();
 
     Application app = new Application(beaconChain);
-    app.start(0);
+    app.start(1);
 
     int numBlocks = 0;
     int maxBlocks = 20;
@@ -21,6 +24,7 @@ public class CrossShardSimMain {
       System.out.println("Beacon Block Number: " + beaconChain.blockNumber);
       beaconChain.mineBlock();
       app.processNextBlock();
+      beaconChain.printAllShards();
     }
     System.out.println("End");
   }

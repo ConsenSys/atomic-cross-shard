@@ -1,4 +1,4 @@
-package tech.pegasys.teamx.crossshardsim;
+package tech.pegasys.teamx.crossshardsim.shard;
 
 public class Contract {
   boolean lockable;
@@ -52,6 +52,18 @@ public class Contract {
   }
 
 
+  @Override
+  public String toString() {
+    String info = "Contract: " + this.address + ", Lockable: " + lockable;
+    if (this.lockable) {
+      info = info + ", Locked: " + this.locked;
+    }
+    if (this.locked) {
+      info = info + ", Provisional Value: " + this.provisionalValue + ", Provisional State: " + this.provisionalState;
+    }
+    info = info + ", Value: " + this.value + ", State: " + this.state;
+    return info;
+  }
 
 
 }
